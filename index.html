@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Araguaia Máquinas - Potência e Durabilidade</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Customization & Custom Styles -->
+    <style type="text/tailwindcss">
+        @theme {
+            --color-brand-yellow: #FFB800;
+            --color-brand-dark: #111111;
+            --color-brand-gray: #f4f4f4;
+            --color-brand-border: #e5e5e5;
+            
+            --font-anton: 'Anton', sans-serif;
+            --font-inter: 'Inter', sans-serif;
+        }
+    </style>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { 
+            width: 8px; 
+        }
+        ::-webkit-scrollbar-track { 
+            background: #f4f4f4; 
+        }
+        ::-webkit-scrollbar-thumb { 
+            background: #111111; 
+            border-radius: 0px; /* Industrial flat look */
+        }
+        ::-webkit-scrollbar-thumb:hover { 
+            background: #FFB800; 
+        }
+        * { 
+            scrollbar-width: thin; 
+            scrollbar-color: #111111 #f4f4f4; 
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: none; }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        
+        /* Star Fill Utility */
+        .star-filled {
+            fill: #FFB800;
+            color: #FFB800;
+        }
+    </style>
+</head>
+<body class="font-inter bg-white text-brand-dark antialiased">
+
+    <!-- Top Bar -->
+    <div class="bg-brand-dark text-white py-1.5 px-4 text-xs font-semibold text-center uppercase tracking-wider">
+        <span>Frete Grátis para todo o Brasil em compras acima de <span class="text-brand-yellow">R$ 500!</span></span>
+    </div>
+
+    <!-- Header Principal -->
+    <header class="bg-white border-b border-brand-border sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 md:py-6 flex items-center justify-between gap-6">
+            
+            <!-- Logo -->
+            <a href="#" class="flex-shrink-0">
+                <img src="https://placehold.co/240x60/ffffff/111111?text=ARAGUAIA+MAQUINAS&font=anton" alt="Araguaia Máquinas Logo" class="h-8 md:h-10 w-auto">
+            </a>
+
+            <!-- Search Bar (Desktop) -->
+            <div class="hidden md:flex flex-1 max-w-2xl bg-brand-gray rounded-sm">
+                <form action="#" method="GET" class="w-full flex items-center px-4 py-3">
+                    <input type="text" name="busca" placeholder="O que você está procurando?" class="w-full bg-transparent border-none focus:outline-none text-sm placeholder-gray-500">
+                    <button type="submit" class="text-brand-dark hover:text-brand-yellow transition-colors">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Icons -->
+            <div class="flex items-center gap-5">
+                <a href="#login" class="hidden md:flex flex-col items-center gap-1 text-brand-dark hover:text-brand-yellow transition-colors group">
+                    <i data-lucide="user" class="w-6 h-6 stroke-[1.5px]"></i>
+                    <span class="text-[10px] uppercase font-bold tracking-widest hidden lg:block group-hover:text-brand-yellow">Entrar</span>
+                </a>
+                <a href="#favoritos" class="hidden md:flex flex-col items-center gap-1 text-brand-dark hover:text-brand-yellow transition-colors group">
+                    <i data-lucide="heart" class="w-6 h-6 stroke-[1.5px]"></i>
+                    <span class="text-[10px] uppercase font-bold tracking-widest hidden lg:block group-hover:text-brand-yellow">Favoritos</span>
+                </a>
+                <a href="#carrinho" class="flex flex-col items-center gap-1 text-brand-dark hover:text-brand-yellow transition-colors relative group">
+                    <div class="relative">
+                        <i data-lucide="shopping-cart" class="w-6 h-6 stroke-[1.5px]"></i>
+                        <span class="absolute -top-1.5 -right-2 bg-brand-yellow text-brand-dark text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">2</span>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold tracking-widest hidden lg:block group-hover:text-brand-yellow">Carrinho</span>
+                </a>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-brand-dark">
+                    <i data-lucide="menu" class="w-7 h-7 stroke-[2px]"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Search (Visible only when menu is closed but on mobile) -->
+        <div class="md:hidden px-4 pb-4">
+            <form action="#" method="GET" class="w-full flex items-center bg-brand-gray px-4 py-2 rounded-sm">
+                <input type="text" name="busca_mobile" placeholder="Buscar produtos..." class="w-full bg-transparent border-none focus:outline-none text-sm">
+                <button type="submit"><i data-lucide="search" class="w-5 h-5 text-gray-500"></i></button>
+            </form>
+        </div>
+    </header>
+
+    <!-- Nav Menu (Desktop & Mobile Dropdown) -->
+    <nav id="mobile-menu" class="hidden md:block bg-brand-gray border-b border-gray-200 shadow-sm">
+        <ul class="flex flex-col md:flex-row md:justify-center md:items-center gap-0 md:gap-8 max-w-7xl mx-auto text-sm font-bold uppercase tracking-wide text-brand-dark">
+            <li class="border-b md:border-none border-gray-300"><a href="#categorias" class="block py-4 px-6 md:px-0 md:py-3 hover:text-brand-yellow transition-colors hover:bg-white md:hover:bg-transparent">Motosserras</a></li>
+            <li class="border-b md:border-none border-gray-300"><a href="#categorias" class="block py-4 px-6 md:px-0 md:py-3 hover:text-brand-yellow transition-colors hover:bg-white md:hover:bg-transparent">Roçadeiras</a></li>
+            <li class="border-b md:border-none border-gray-300"><a href="#categorias" class="block py-4 px-6 md:px-0 md:py-3 hover:text-brand-yellow transition-colors hover:bg-white md:hover:bg-transparent">Sopradores</a></li>
+            <li class="border-b md:border-none border-gray-300"><a href="#categorias" class="block py-4 px-6 md:px-0 md:py-3 hover:text-brand-yellow transition-colors hover:bg-white md:hover:bg-transparent">Lavadoras</a></li>
+            <li class="border-b md:border-none border-gray-300"><a href="#destaques" class="block py-4 px-6 md:px-0 md:py-3 hover:text-brand-yellow transition-colors hover:bg-white md:hover:bg-transparent text-brand-yellow">Ofertas</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="relative h-[500px] md:h-[650px] w-full flex items-center justify-start overflow-hidden bg-brand-dark">
+            <!-- Background Image -->
+            <img src="https://buildix-user-images.s3.us-east-2.amazonaws.com/ai-generated/7609ee0b-ec12-4f50-9fa1-7290b051bd94.webp" alt="Homem usando motosserra profissional" class="absolute inset-0 w-full h-full object-cover object-center opacity-60">
+            
+            <!-- Dark Overlay for better text readability -->
+            <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 w-full">
+                <div class="max-w-2xl">
+                    <span class="inline-block px-3 py-1 bg-brand-yellow text-brand-dark font-bold text-sm uppercase tracking-widest mb-4 animate-fade-in-up">Lançamento 2024</span>
+                    <h1 class="font-anton text-5xl md:text-7xl lg:text-8xl text-white uppercase leading-[0.9] tracking-wide mb-6 animate-fade-in-up delay-100">
+                        Potência <br>
+                        <span class="text-brand-yellow">Bruta.</span>
+                    </h1>
+                    <p class="text-gray-200 text-lg md:text-xl mb-8 font-light animate-fade-in-up delay-200">Equipamentos de alta performance para quem exige o máximo no campo ou na cidade.</p>
+                    <a href="#destaques" class="inline-flex items-center justify-center bg-brand-yellow text-brand-dark font-anton text-xl px-10 py-5 uppercase tracking-widest hover:bg-white transition-all duration-300 group animate-fade-in-up delay-300">
+                        Comprar Agora
+                        <i data-lucide="arrow-right" class="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categorias" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="font-anton text-3xl md:text-4xl text-center uppercase mb-12 text-brand-dark">Compre por Categoria</h2>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <!-- Category 1 -->
+                    <a href="#destaques" class="flex flex-col items-center group">
+                        <div class="w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-brand-gray group-hover:border-brand-yellow transition-colors duration-300 mb-4 bg-brand-gray p-2">
+                            <img src="https://buildix-user-images.s3.us-east-2.amazonaws.com/ai-generated/dcb4ef15-77ad-452a-a302-6b876aaf8c5c.webp" alt="Motosserras" class="w-full h-full object-cover rounded-full mix-blend-multiply">
+                        </div>
+                        <h3 class="font-bold text-lg uppercase tracking-wide group-hover:text-brand-yellow transition-colors">Motosserras</h3>
+                    </a>
+                    
+                    <!-- Category 2 -->
+                    <a href="#destaques" class="flex flex-col items-center group">
+                        <div class="w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-brand-gray group-hover:border-brand-yellow transition-colors duration-300 mb-4 bg-brand-gray p-2">
+                            <img src="https://buildix-user-images.s3.us-east-2.amazonaws.com/ai-generated/a711b920-23cf-4483-91c7-429abe43cd8d.webp" alt="Roçadeiras" class="w-full h-full object-cover rounded-full mix-blend-multiply">
+                        </div>
+                        <h3 class="font-bold text-lg uppercase tracking-wide group-hover:text-brand-yellow transition-colors">Roçadeiras</h3>
+                    </a>
+
+                    <!-- Category 3 -->
+                    <a href="#destaques" class="flex flex-col items-center group">
+                        <div class="w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-brand-gray group-hover:border-brand-yellow transition-colors duration-300 mb-4 bg-brand-gray p-2">
+                            <img src="https://buildix-user-images.s3.us-east-2.amazonaws.com/ai-generated/6f4ea669-49a7-4bc5-be60-812931984f73.webp" alt="Sopradores" class="w-full h-full object-cover rounded-full mix-blend-multiply">
+                        </div>
+                        <h3 class="font-bold text-lg uppercase tracking-wide group-hover:text-brand-yellow transition-colors">Sopradores</h3>
+                    </a>
+
+                    <!-- Category 4 -->
+                    <a href="#destaques" class="flex flex-col items-center group">
+                        <div class="w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-brand-gray group-hover:border-brand-yellow transition-colors duration-300 mb-4 bg-brand-gray p-2">
+                            <img src="https://buildix-user-images.s3.us-east-2.amazonaws.com/ai-generated/d96a86be-a1cc-443f-b492-0f8705025ee2.webp" alt="Lavadoras" class="w-full h-full object-cover rounded-full mix-blend-multiply">
+                        </div>
+                        <h3 class="font-bold text-lg uppercase tracking-wide group-hover:text-brand-yellow transition-colors">Lavadoras</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Showcase (Destaques) -->
+        <section id="destaques" class="py-24 bg-brand-gray">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
+                    <h2 class="font-anton text-4xl uppercase text-brand-dark">Produtos em Destaque</h2>
+                    <a href="#categorias" class="font-bold uppercase tracking-wider text-sm border-b-2 border-brand-dark hover:text-brand-yellow hover:border-brand-yellow transition-colors pb-1">Ver todos</a>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Product Card 1 -->
+                    <article class="bg-white border border-brand-border p-6 relative group flex flex-col justify-between hover:shadow-xl transition-shadow duration-300">
+                        <span class="absolute top-4 left-4 bg-brand-yellow text-brand-dark text-xs font-bold px-2 py-1 uppercase z-10">-15% OFF</span>
+                        <button class="absolute top-4 right-4 text-gray-300 hover:text-brand-yellow transition-colors z-10">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </button>
+                        
+                        <div class="h-64 mb-6 overflow-hidden flex items-center justify-center p-4">
+                            <img src="https://buildix-user-images.s3.us-east-2.amazonaws.com/ai-generated/e71f1123-2a44-4fe9-ac0d-71b56afbbdfd.webp" alt="Motosserra Profissional MS 382" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center gap-1 mb-2">
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <span class="text-xs text-gray-500 ml-1">(42)</span>
+                            </div>
+                            <h3 class="font-semibold text-brand-dark mb-2 line-clamp-2">Motosserra Profissional de Alta Performance AR-500</h3>
+                            <div class="mb-4 flex flex-col">
+                                <span class="text-sm text-gray-400 line-through">R$ 2.450,00</span>
+                                <span class="font-anton text-4xl text-brand-dark">R$ 2.082,50</span>
+                                <span class="text-xs text-gray-500 mt-1">10x de R$ 208,25 sem juros</span>
+                            </div>
+                        </div>
+                        
+                        <form action="#" method="POST" class="mt-auto">
+                            <input type="hidden" name="produto_id" value="1">
+                            <button type="submit" class="w-full border-2 border-brand-dark bg-transparent text-brand-dark font-anton text-xl uppercase py-3 hover:bg-brand-dark hover:text-white transition-colors duration-300">
+                                Adicionar ao Carrinho
+                            </button>
+                        </form>
+                    </article>
+
+                    <!-- Product Card 2 -->
+                    <article class="bg-white border border-brand-border p-6 relative group flex flex-col justify-between hover:shadow-xl transition-shadow duration-300">
+                        <span class="absolute top-4 left-4 bg-brand-dark text-white text-xs font-bold px-2 py-1 uppercase z-10">Mais Vendido</span>
+                        <button class="absolute top-4 right-4 text-gray-300 hover:text-brand-yellow transition-colors z-10">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </button>
+                        
+                        <div class="h-64 mb-6 overflow-hidden flex items-center justify-center p-4">
+                            <img src="https://buildix-user-images.s3.us-east-2.amazonaws.com/ai-generated/0695f470-d8ac-4ced-abdd-754fc1a47f9b.webp" alt="Roçadeira a Combustão" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center gap-1 mb-2">
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <i data-lucide="star" class="w-4 h-4 text-gray-300"></i>
+                                <span class="text-xs text-gray-500 ml-1">(128)</span>
+                            </div>
+                            <h3 class="font-semibold text-brand-dark mb-2 line-clamp-2">Roçadeira a Combustão 2 Tempos Lateral RX-220</h3>
+                            <div class="mb-4 flex flex-col">
+                                <span class="text-sm text-gray-400 line-through">R$ 1.890,00</span>
+                                <span class="font-anton text-4xl text-brand-dark">R$ 1.699,00</span>
+                                <span class="text-xs text-gray-500 mt-1">10x de R$ 169,90 sem juros</span>
+                            </div>
+                        </div>
+                        
+                        <form action="#" method="POST" class="mt-auto">
+                            <input type="hidden" name="produto_id" value="2">
+                            <button type="submit" class="w-full border-2 border-brand-dark bg-transparent text-brand-dark font-anton text-xl uppercase py-3 hover:bg-brand-dark hover:text-white transition-colors duration-300">
+                                Adicionar ao Carrinho
+                            </button>
+                        </form>
+                    </article>
+
+                    <!-- Product Card 3 -->
+                    <article class="bg-white border border-brand-border p-6 relative group flex flex-col justify-between hover:shadow-xl transition-shadow duration-300">
+                        <button class="absolute top-4 right-4 text-gray-300 hover:text-brand-yellow transition-colors z-10">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </button>
+                        
+                        <div class="h-64 mb-6 overflow-hidden flex items-center justify-center p-4">
+                            <img src="https://buildix-user-images.s3.us-east-2.amazonaws.com/ai-generated/de23ffe2-f025-43c5-b537-dc660f933350.webp" alt="Soprador de Folhas Costal" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center gap-1 mb-2">
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <i data-lucide="star" class="w-4 h-4 star-filled"></i>
+                                <span class="text-xs text-gray-500 ml-1">(89)</span>
+                            </div>
+                            <h3 class="font-semibold text-brand-dark mb-2 line-clamp-2">Soprador de Folhas Costal Alta Vazão SP-800</h3>
+                            <div class="mb-4 flex flex-col">
+                                <span class="text-sm text-gray-400 line-through">R$ 3.100,00</span>
+                                <span class="font-anton text-4xl text-brand-dark">R$ 2.850,00</span>
+                                <span class="text-xs text-gray-500 mt-1">10x de R$ 285,00 sem juros</span>
+                            </div>
+                        </div>
+                        
+                        <form action="#" method="POST" class="mt-auto">
+                            <input type="hidden" name="produto_id" value="3">
+                            <button type="submit" class="w-full border-2 border-brand-dark bg-transparent text-brand-dark font-anton text-xl uppercase py-3 hover:bg-brand-dark hover:text-white transition-colors duration-300">
+                                Adicionar ao Carrinho
+                            </button>
+                        </form>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Features / Benefits -->
+        <section id="beneficios" class="py-16 border-t border-brand-border bg-white">
+            <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8 divide-y md:divide-y-0 md:divide-x divide-gray-200">
+                <div class="flex flex-col items-center text-center pt-4 md:pt-0 px-4">
+                    <i data-lucide="truck" class="w-10 h-10 text-brand-yellow mb-4"></i>
+                    <h4 class="font-bold uppercase tracking-wide mb-2">Entrega Rápida</h4>
+                    <p class="text-sm text-gray-600">Enviamos para todo o Brasil com segurança.</p>
+                </div>
+                <div class="flex flex-col items-center text-center pt-8 md:pt-0 px-4">
+                    <i data-lucide="shield-check" class="w-10 h-10 text-brand-yellow mb-4"></i>
+                    <h4 class="font-bold uppercase tracking-wide mb-2">Garantia Original</h4>
+                    <p class="text-sm text-gray-600">Todos os produtos possuem garantia de fábrica.</p>
+                </div>
+                <div class="flex flex-col items-center text-center pt-8 md:pt-0 px-4">
+                    <i data-lucide="credit-card" class="w-10 h-10 text-brand-yellow mb-4"></i>
+                    <h4 class="font-bold uppercase tracking-wide mb-2">Pagamento Facilitado</h4>
+                    <p class="text-sm text-gray-600">Parcele em até 10x sem juros no cartão.</p>
+                </div>
+                <div class="flex flex-col items-center text-center pt-8 md:pt-0 px-4">
+                    <i data-lucide="wrench" class="w-10 h-10 text-brand-yellow mb-4"></i>
+                    <h4 class="font-bold uppercase tracking-wide mb-2">Assistência Técnica</h4>
+                    <p class="text-sm text-gray-600">Rede autorizada em todo território nacional.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section id="newsletter" class="bg-brand-yellow py-16">
+            <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="md:w-1/2">
+                    <h2 class="font-anton text-4xl uppercase text-brand-dark mb-2">Receba Ofertas Exclusivas</h2>
+                    <p class="text-brand-dark/80 font-medium">Cadastre seu e-mail e seja o primeiro a saber das novidades e promoções arrasadoras.</p>
+                </div>
+                <div class="md:w-1/2 w-full">
+                    <form action="#" method="POST" class="flex flex-col sm:flex-row gap-2 w-full">
+                        <input type="email" name="email_newsletter" placeholder="Digite seu melhor e-mail" required class="flex-1 bg-white border-none px-6 py-4 text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-dark">
+                        <button type="submit" class="bg-brand-dark text-white font-anton text-xl uppercase px-8 py-4 hover:bg-gray-800 transition-colors">
+                            Assinar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-brand-dark pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 border-b border-gray-800 pb-16">
+                
+                <!-- Col 1: Brand -->
+                <div>
+                    <img src="https://placehold.co/240x60/111111/ffffff?text=ARAGUAIA+MAQUINAS&font=anton" alt="Araguaia Máquinas Logo Branco" class="h-10 w-auto mb-6 opacity-90">
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                        A maior loja especializada em máquinas, ferramentas e equipamentos para o campo e cidade. Qualidade e força bruta que você confia.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-brand-yellow hover:text-brand-dark transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-brand-yellow hover:text-brand-dark transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-brand-yellow hover:text-brand-dark transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Institucional -->
+                <div>
+                    <h4 class="font-anton text-2xl uppercase text-white mb-6 tracking-wide">Institucional</h4>
+                    <ul class="flex flex-col gap-3 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-brand-yellow transition-colors">Sobre a Empresa</a></li>
+                        <li><a href="#" class="hover:text-brand-yellow transition-colors">Nossas Lojas</a></li>
+                        <li><a href="#" class="hover:text-brand-yellow transition-colors">Trabalhe Conosco</a></li>
+                        <li><a href="#" class="hover:text-brand-yellow transition-colors">Política de Privacidade</a></li>
+                        <li><a href="#" class="hover:text-brand-yellow transition-colors">Termos de Uso</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Dúvidas -->
+                <div>
+                    <h4 class="font-anton text-2xl uppercase text-white mb-6 tracking-wide">Atendimento</h4>
+                    <ul class="flex flex-col gap-3 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-brand-yellow transition-colors">Central de Ajuda</a></li>
+                        <li><a href="#" class="hover:text-brand-yellow transition-colors">Trocas e Devoluções</a></li>
+                        <li><a href="#" class="hover:text-brand-yellow transition-colors">Acompanhar Pedido</a></li>
+                        <li class="flex items-center gap-2 mt-4 text-white">
+                            <i data-lucide="phone" class="w-5 h-5 text-brand-yellow"></i>
+                            <span class="font-bold">(11) 4002-8922</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-white">
+                            <i data-lucide="mail" class="w-5 h-5 text-brand-yellow"></i>
+                            <span>contato@araguaiamaquinas.com.br</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Pagamento e Segurança -->
+                <div>
+                    <h4 class="font-anton text-2xl uppercase text-white mb-6 tracking-wide">Pagamento</h4>
+                    <div class="flex gap-2 mb-8 flex-wrap">
+                        <div class="bg-white px-2 py-1 rounded text-brand-dark font-bold text-xs">VISA</div>
+                        <div class="bg-white px-2 py-1 rounded text-brand-dark font-bold text-xs">MASTERCARD</div>
+                        <div class="bg-white px-2 py-1 rounded text-brand-dark font-bold text-xs">PIX</div>
+                        <div class="bg-white px-2 py-1 rounded text-brand-dark font-bold text-xs">BOLETO</div>
+                    </div>
+                    
+                    <h4 class="font-anton text-2xl uppercase text-white mb-6 tracking-wide">Segurança</h4>
+                    <div class="flex gap-4">
+                        <div class="flex flex-col items-center gap-1 text-gray-500">
+                            <i data-lucide="shield-check" class="w-8 h-8"></i>
+                            <span class="text-[10px] uppercase">Site Seguro</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-1 text-gray-500">
+                            <i data-lucide="lock" class="w-8 h-8"></i>
+                            <span class="text-[10px] uppercase">SSL</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between text-gray-600 text-xs">
+                <p>&copy; 2024 Araguaia Máquinas e Ferramentas LTDA. CNPJ: 00.000.000/0001-00. Todos os direitos reservados.</p>
+                <p class="mt-2 md:mt-0">Design por Buildix AI</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        function initLucide(){
+            if(window.lucide){
+                lucide.createIcons()
+            }else{
+                setTimeout(initLucide,200)
+            }
+        }
+        initLucide();
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+    </script>
+
+<!-- Buildix Badge -->
+<a href="https://buildix.app" target="_blank" rel="noopener noreferrer"
+   style="position:fixed;bottom:16px;right:16px;z-index:9999;display:flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(24,24,27,0.9);backdrop-filter:blur(4px);border-radius:9999px;font-size:12px;color:#a1a1aa;text-decoration:none;border:1px solid rgba(63,63,70,0.5);font-family:system-ui,-apple-system,sans-serif;transition:color 0.2s;"
+   onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#a1a1aa'">
+  <svg width="14" height="14" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bx-deep" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+      <stop offset="0%" stop-color="#4a1a88"/>
+      <stop offset="40%" stop-color="#200d50"/>
+      <stop offset="100%" stop-color="#02010a"/>
+    </radialGradient>
+    <radialGradient id="bx-neb1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff33dd" stop-opacity="0.8"/>
+      <stop offset="70%" stop-color="#330044" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bx-neb2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#55ffff" stop-opacity="0.7"/>
+      <stop offset="70%" stop-color="#003366" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="bx-clip"><circle cx="256" cy="256" r="200"/></clipPath>
+  </defs>
+  <g>
+    <circle cx="256" cy="256" r="202" fill="none" stroke="#aa88ff" stroke-width="3" opacity="0.5"/>
+    <g clip-path="url(#bx-clip)">
+      <rect width="512" height="512" fill="url(#bx-deep)"/>
+      <circle cx="180" cy="180" r="300" fill="url(#bx-neb1)" opacity="0.7"/>
+      <circle cx="350" cy="350" r="280" fill="url(#bx-neb2)" opacity="0.6"/>
+      <g fill="#fff">
+        <circle cx="200" cy="150" r="2" opacity="0.9"/>
+        <circle cx="100" cy="300" r="1.5" opacity="0.7"/>
+        <circle cx="350" cy="100" r="1.8" opacity="0.8"/>
+        <circle cx="400" cy="300" r="1.2" opacity="0.6"/>
+        <circle cx="256" cy="256" r="2" opacity="0.8"/>
+      </g>
+    </g>
+    <circle cx="256" cy="256" r="200" fill="none" stroke="#6d58a6" stroke-width="1.5" opacity="0.3"/>
+  </g>
+</svg>
+  Made in Buildix
+</a>
+<!-- End Buildix Badge -->
+
+</body>
+</html>
